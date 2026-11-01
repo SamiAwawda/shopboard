@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ShopBoard</title>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <header>
+      <a class="logo" href="/">ShopBoard</a>
+      <nav aria-label="Main">
+        <a href="#products">Shop</a>
+        <a href="#register">Sign up</a>
+      </nav>
+      <p class="cart">
+        <a href="#cart">Cart: <span id="cart-count">0</span></a>
+      </p>
+    </header>
+    <main>
+      <section class="hero">
+        <h1>Sell smarter.</h1>
+        <p>Everything your shop needs, in one board.</p>
+      </section>
+      <section id="products" aria-labelledby="products-title">
+        <h2 id="products-title">Products</h2>
+        <div class="controls">
+          <label for="search">
+            Search
+            <input type="search" id="search" placeholder="Search by name" />
+          </label>
+          <label for="category">
+            Category
+            <select id="category">
+              <option value="All">All</option>
+              <option value="Bags">Bags</option>
+              <option value="Shoes">Shoes</option>
+              <option value="Accessories">Accessories</option>
+            </select>
+          </label>
+          <label for="sort">
+            Sort by
+            <select id="sort">
+              <option value="asc">Price: low to high</option>
+              <option value="desc">Price: high to low</option>
+            </select>
+          </label>
+        </div>
+        <div class="grid"></div>
+      </section>
+      <section id="cart" aria-labelledby="cart-title">
+        <h2 id="cart-title">Your cart</h2>
+        <ul id="cart-items" class="cart-list"></ul>
+        <p class="cart-total">
+          Items: <span id="cart-items-count">0</span> · Total: <strong id="cart-total">$0</strong>
+        </p>
+      </section>
+    </main>
+    <footer>
+      <p>© 2026 ShopBoard</p>
+    </footer>
+    <script type="module" src="./src/main.js"></script>
+  </body>
+</html>
