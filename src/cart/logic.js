@@ -1,15 +1,4 @@
-export function filterProducts(products, text, category) {
-  const query = text.trim().toLowerCase();
-  return products.filter(
-    (p) => p.name.toLowerCase().includes(query) && (category === "All" || p.category === category),
-  );
-}
-
-export function sortByPrice(products, direction) {
-  return [...products].sort((a, b) =>
-    direction === "asc" ? a.price - b.price : b.price - a.price,
-  );
-}
+// Cart logic: pure functions for cart math (no DOM, no localStorage).
 
 export function addItem(cart, id) {
   const exists = cart.some((item) => item.id === id);
@@ -30,4 +19,18 @@ export function cartTotal(lines) {
 
 export function countItems(cart) {
   return cart.reduce((total, item) => total + item.qty, 0);
+}
+
+const MIN_QTY = 1;
+
+// Changes one item's quantity by delta; an item that would drop below MIN_QTY is removed.
+export function changeQty(cart, id, delta) {
+  return cart
+    .map((item) => (item.id === id ? { ...item, qty: item.qty + delta } : item))
+    .filter((item) => item.qty >= MIN_QTY);
+}
+
+// Returns the cart without the item that has this id.
+export function removeItem(cart, id) {
+  return cart.filter((item) => item.id !== id);
 }

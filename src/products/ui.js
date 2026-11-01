@@ -1,11 +1,8 @@
+// Products UI: the only products file that touches the DOM.
 const searchInput = document.querySelector("#search");
 const categorySelect = document.querySelector("#category");
 const sortSelect = document.querySelector("#sort");
 const grid = document.querySelector("#products .grid");
-const cartCount = document.querySelector("#cart-count");
-const cartItems = document.querySelector("#cart-items");
-const cartTotal = document.querySelector("#cart-total");
-const cartItemsCount = document.querySelector("#cart-items-count");
 
 function productCard(product) {
   return `
@@ -18,26 +15,6 @@ function productCard(product) {
 
 export function renderProducts(list) {
   grid.innerHTML = list.map(productCard).join("");
-}
-
-export function renderCartCount(count) {
-  cartCount.textContent = count;
-}
-
-function cartLine(line) {
-  return `
-    <li>
-      <span>${line.name} × ${line.qty}</span>
-      <span>$${line.subtotal}</span>
-    </li>`;
-}
-
-export function renderCart(lines, total, count) {
-  cartItems.innerHTML = lines.length
-    ? lines.map(cartLine).join("")
-    : "<li>Your cart is empty.</li>";
-  cartTotal.textContent = `$${total}`;
-  cartItemsCount.textContent = count;
 }
 
 export function readControls() {
