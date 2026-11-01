@@ -123,3 +123,21 @@ footer {
 .cart-total {
   font-size: 18px;
 }
+#register {
+  margin-top: 32px;
+}
+#signup-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-width: 400px;
+}
+#signup-form label {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 14px;
+}
+#signup-status {
+  color: #1d7a4c;
+}

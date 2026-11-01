@@ -57,6 +57,32 @@
         </p>
         <button type="button" id="clear-cart">Clear cart</button>
       </section>
+      <section id="register" aria-labelledby="register-title">
+        <h2 id="register-title">Sign up</h2>
+        <form id="signup-form">
+          <label for="signup-name">
+            Name
+            <input type="text" id="signup-name" name="name" autocomplete="name" required />
+          </label>
+          <label for="signup-email">
+            Email
+            <input type="email" id="signup-email" name="email" autocomplete="email" required />
+          </label>
+          <label for="signup-password">
+            Password (at least 8 characters)
+            <input
+              type="password"
+              id="signup-password"
+              name="password"
+              autocomplete="new-password"
+              minlength="8"
+              required
+            />
+          </label>
+          <button type="submit">Create account</button>
+        </form>
+        <p id="signup-status" role="status"></p>
+      </section>
     </main>
     <footer>
       <p>© 2026 ShopBoard</p>

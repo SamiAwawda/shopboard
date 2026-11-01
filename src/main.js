@@ -4,6 +4,7 @@ import { countItems, cartLines, cartTotal } from "./cart/logic.js";
 import { loadCart, addToCart, updateQty, removeFromCart, clearCart } from "./cart/state.js";
 import { renderCartCount, renderCart, onCartAction, onClearCart } from "./cart/ui.js";
 import { renderProducts, readControls, onControlsChange, onAddToCart } from "./products/ui.js";
+import { onSignup, showSignupSuccess } from "./signup/ui.js";
 
 function updateProducts() {
   const { text, category, direction } = readControls();
@@ -39,3 +40,5 @@ onClearCart(() => {
 
 updateProducts();
 updateCart();
+
+onSignup(showSignupSuccess);
