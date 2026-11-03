@@ -1,11 +1,12 @@
 // Cart state: loads and saves the cart in localStorage.
 import type { Cart } from "./cart.types";
-import { addItem, changeQty, removeItem } from "./logic";
+import { addItem, changeQty, isCart, removeItem } from "./logic";
 
 const CART_KEY = "cart";
 
 export function loadCart(): Cart {
-  return JSON.parse(localStorage.getItem(CART_KEY) ?? "[]") as Cart;
+  const saved: unknown = JSON.parse(localStorage.getItem(CART_KEY) ?? "[]");
+  return isCart(saved) ? saved : [];
 }
 
 function saveCart(cart: Cart): void {

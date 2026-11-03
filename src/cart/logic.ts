@@ -1,11 +1,28 @@
 // Cart logic: pure functions for cart math (no DOM, no localStorage).
 
-import type { Cart } from "./cart.types";
+import type { Cart, CartItem } from "./cart.types";
 
 // The product fields the cart needs (no import from the products folder).
 export type CartProduct = { id: number; name: string; price: number };
 // A cart entry joined with its product, plus the subtotal for display.
 export type CartLine = CartProduct & { qty: number; subtotal: number };
+
+// Checks that an unknown value is one cart entry: an object with a number id and a number qty.
+function isCartItem(value: unknown): value is CartItem {
+  return (
+    typeof value === "object" &&
+    value !== null &&
+    "id" in value &&
+    "qty" in value &&
+    typeof value.id === "number" &&
+    typeof value.qty === "number"
+  );
+}
+
+// Checks that an unknown value (for example data read from localStorage) is a valid Cart.
+export function isCart(value: unknown): value is Cart {
+  return Array.isArray(value) && value.every(isCartItem);
+}
 
 export function addItem(cart: Cart, id: number): Cart {
   const exists = cart.some((item) => item.id === id);
