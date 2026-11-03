@@ -1,10 +1,10 @@
-import { products } from "./products/data.js";
-import { filterProducts, sortByPrice } from "./products/logic.js";
-import { countItems, cartLines, cartTotal } from "./cart/logic.js";
-import { loadCart, addToCart, updateQty, removeFromCart, clearCart } from "./cart/state.js";
-import { renderCartCount, renderCart, onCartAction, onClearCart } from "./cart/ui.js";
-import { renderProducts, readControls, onControlsChange, onAddToCart } from "./products/ui.js";
-import { onSignup, showSignupSuccess } from "./signup/ui.js";
+import { products } from "./products/data";
+import { filterProducts, sortByPrice } from "./products/logic";
+import { countItems, cartLines, cartTotal } from "./cart/logic";
+import { loadCart, addToCart, updateQty, removeFromCart, clearCart } from "./cart/state";
+import { renderCartCount, renderCart, onCartAction, onClearCart } from "./cart/ui";
+import { renderProducts, readControls, onControlsChange, onAddToCart } from "./products/ui";
+import { onSignup, showSignupSuccess } from "./signup/ui";
 
 function updateProducts() {
   const { text, category, direction } = readControls();

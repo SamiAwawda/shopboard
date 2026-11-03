@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" role="img" aria-label="Photo coming soon">
+  <rect width="400" height="300" fill="#e3e4e5" />
+  <rect x="120" y="85" width="160" height="100" rx="8" fill="none" stroke="#767676" stroke-width="8" />
+  <path d="M165 215h70M200 185v30" stroke="#767676" stroke-width="8" stroke-linecap="round" />
+</svg>

@@ -1,9 +1,11 @@
 import js from "@eslint/js";
 import globals from "globals";
+import tseslint from "typescript-eslint";
 
-export default [
+export default tseslint.config(
   { ignores: ["dist"] },
   js.configs.recommended,
+  ...tseslint.configs.recommended,
   {
     languageOptions: {
       ecmaVersion: "latest",
@@ -14,7 +16,8 @@ export default [
       eqeqeq: "error",
       "no-var": "error",
       "prefer-const": "error",
-      "no-unused-vars": "warn",
+      "no-unused-vars": "off",
+      "@typescript-eslint/no-unused-vars": "warn",
     },
   },
-];
+);
