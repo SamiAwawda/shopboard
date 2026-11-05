@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cart · ShopBoard</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <div class="app">
+      <header>
+        <a class="logo" href="/"
+          ><img src="/images/logo/shopboard-lockup.svg" alt="ShopBoard" width="150" height="32"
+        /></a>
+        <nav aria-label="Main">
+          <a href="/">Products</a>
+          <a href="/cart.html" aria-current="page">Cart</a>
+          <a href="/#register">Sign up</a>
+        </nav>
+        <form class="search" role="search" action="/" method="get">
+          <label for="search" class="visually-hidden">Search products</label>
+          <input type="search" id="search" name="q" placeholder="Search" />
+          <svg class="icon" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
+            <circle cx="11" cy="11" r="7" />
+            <path d="m20 20-3.5-3.5" />
+          </svg>
+        </form>
+        <a class="cart-link" href="/cart.html">
+          <svg class="icon" viewBox="0 0 24 24" width="26" height="26" aria-hidden="true">
+            <path d="M5.5 8h13l-1.2 11.2a2 2 0 0 1-2 1.8H8.7a2 2 0 0 1-2-1.8L5.5 8Z" />
+            <path d="M9 8a3 3 0 0 1 6 0" />
+            <path d="M9.5 13.5a2.5 2.5 0 0 0 5 0" />
+          </svg>
+          <span class="visually-hidden">Cart:</span>
+          <span id="cart-count">0</span>
+        </a>
+      </header>
+      <main class="cart-page">
+        <div class="cart-layout">
+          <section class="cart-panel reveal" style="--i: 0" aria-labelledby="cart-title">
+            <div class="cart-panel-head">
+              <h1 id="cart-title">
+                Cart <span class="cart-items-label" id="cart-items-label">(0 items)</span>
+              </h1>
+              <button type="button" class="text-button" id="clear-cart">
+                <svg class="icon" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+                  <path d="M6 6l12 12M18 6 6 18" />
+                </svg>
+                Clear cart
+              </button>
+            </div>
+            <div class="cart-columns" id="cart-columns" aria-hidden="true">
+              <span>Product</span>
+              <span>Count</span>
+              <span>Price</span>
+            </div>
+            <ul class="cart-rows" id="cart-rows"></ul>
+            <div class="cart-empty" id="cart-empty" hidden>
+              <svg class="icon" viewBox="0 0 24 24" width="56" height="56" aria-hidden="true">
+                <path d="M5.5 8h13l-1.2 11.2a2 2 0 0 1-2 1.8H8.7a2 2 0 0 1-2-1.8L5.5 8Z" />
+                <path d="M9 8a3 3 0 0 1 6 0" />
+                <path d="M9.5 13.5a2.5 2.5 0 0 0 5 0" />
+              </svg>
+              <p>Your cart is empty.</p>
+              <a class="button-link" href="/">Browse best sellers</a>
+            </div>
+          </section>
+
+          <section class="delivery reveal" style="--i: 1" aria-labelledby="delivery-title">
+            <h2 id="delivery-title">Delivery</h2>
+            <fieldset>
+              <legend class="visually-hidden">Choose a delivery option</legend>
+              <div class="delivery-options" id="delivery-options"></div>
+            </fieldset>
+          </section>
+
+          <aside class="order reveal" style="--i: 2" aria-labelledby="summary-title">
+            <h2 id="promo-title">Promo code</h2>
+            <form class="promo-form" id="promo-form">
+              <label for="promo-code" class="visually-hidden">Promo code</label>
+              <input
+                type="text"
+                id="promo-code"
+                name="promo"
+                placeholder="Type here…"
+                autocomplete="off"
+                required
+              />
+              <button type="submit" class="primary-button">Apply</button>
+            </form>
+            <p class="promo-status" id="promo-status" role="status"></p>
+
+            <h2 class="visually-hidden" id="summary-title">Order summary</h2>
+            <dl class="summary">
+              <div>
+                <dt>Subtotal</dt>
+                <dd id="summary-subtotal">$0.00</dd>
+              </div>
+              <div>
+                <dt>Discount</dt>
+                <dd id="summary-discount">-$0.00</dd>
+              </div>
+              <div>
+                <dt>Delivery</dt>
+                <dd id="summary-delivery">$0.00</dd>
+              </div>
+              <div class="summary-total">
+                <dt>Total</dt>
+                <dd id="summary-total">$0.00</dd>
+              </div>
+            </dl>
+            <button type="button" class="primary-button checkout-button" id="checkout">
+              Continue to checkout
+            </button>
+            <p class="checkout-status" id="checkout-status" role="status"></p>
+          </aside>
+        </div>
+      </main>
+      <footer>
+        <p>© 2026 ShopBoard</p>
+      </footer>
+    </div>
+    <script type="module" src="./src/cart-page.ts"></script>
+  </body>
+</html>

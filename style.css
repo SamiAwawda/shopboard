@@ -1,74 +1,76 @@
-/* Shubbak: the project font, used because Walmart's EverydaySans is proprietary. */
-@font-face {
-  font-family: "Shubbak";
-  src: url("/fonts/shubbak-regular.ttf") format("truetype");
-  font-weight: 400;
-  font-display: swap;
-}
-@font-face {
-  font-family: "Shubbak";
-  src: url("/fonts/shubbak-semibold.ttf") format("truetype");
-  font-weight: 600;
-  font-display: swap;
-}
-@font-face {
-  font-family: "Shubbak";
-  src: url("/fonts/shubbak-bold.ttf") format("truetype");
-  font-weight: 700;
-  font-display: swap;
-}
-@font-face {
-  font-family: "Shubbak";
-  src: url("/fonts/shubbak-extrabold.ttf") format("truetype");
-  font-weight: 800;
-  font-display: swap;
-}
-@font-face {
-  font-family: "Shubbak";
-  src: url("/fonts/shubbak-black.ttf") format("truetype");
-  font-weight: 900;
-  font-display: swap;
-}
-
-/* Design tokens from walmart.design.md. */
+/* ShopBoard styles. The design is described in DESIGN.md (tokens, components, motion).
+   Colors were measured from the reference design; a few are a little darker so text keeps
+   4.5:1 contrast. */
 :root {
-  --color-primary: #0053e2;
-  --color-primary-hover: #114ab6;
-  --color-primary-pressed: #002e99;
-  --color-brand-bold: #001e60;
-  --color-spark: #ffc220;
-  --color-spark-hover: #ffc836;
-  --color-ink: #2e2f32;
-  --color-canvas: #ffffff;
-  --color-surface-subtle: #e3e4e5;
-  --color-brand-subtle: #e9f1fe;
-  --color-text-subdued: #767676;
+  /* Color */
+  --ink: #22292f;
+  --heading: #443486;
+  --ink-muted: #5f5d78;
+  --ink-soft: #5f5b80;
+  --surface: #ffffff;
+  --hero: #e0f6fd;
+  --border: #ebe9f5;
+  --border-strong: #8e89b0;
+  --primary: #6c63bd;
+  --primary-deep: #544996;
+  --primary-tint: #dfdef5;
+  --tile-circle: #dcdcf3;
+  --disabled-bg: #ebeaf3;
+  --disabled-ink: #8a89a0;
 
-  --radius-sm: 4px;
-  --radius-md: 8px;
-  --radius-lg: 32px;
+  /* Type */
+  --font-sans: Poppins, system-ui, sans-serif;
+
+  /* Spacing */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-12: 48px;
+  --page-pad: 16px;
+
+  /* Radius */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-card-info: 22px;
+  --radius-lg: 28px;
+  --radius-xl: 32px;
   --radius-full: 9999px;
 
-  --space-xs: 4px;
-  --space-sm: 8px;
-  --space-md: 12px;
-  --space-base: 16px;
-  --space-lg: 24px;
-  --space-xl: 32px;
-  --space-2xl: 48px;
-  --space-3xl: 64px;
+  /* Shadow */
+  --shadow-card: 0 30px 40px -24px rgba(84, 73, 150, 0.35);
+  --shadow-button: 0 10px 24px rgba(84, 73, 150, 0.18);
 
-  --control-height: 44px;
-  --input-height: 48px;
+  /* Motion */
+  --duration: 350ms;
+  --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --stagger: 60ms;
+  --lift: -6px;
+  --slide-in: 40px;
+  --rise: 16px;
+  --pop-scale: 1.3;
+  --shake: 6px;
+
+  /* Sizes */
+  --touch-target: 44px;
   --input-font-size: 16px;
   --focus-width: 2px;
-  --card-image-ratio: 4 / 3;
-  --card-min-width: 150px;
+  --logo-height: 32px;
+  --round-button: 52px;
+  --card-width: 78%;
+  --card-image-ratio: 11 / 12;
+  --tile-image: 80px;
+  --tile-shift: 0px;
+  --fade-width: 48px;
+  --search-width: 100%;
+  --content-max: 1760px;
+  --cart-image: 64px;
   --cart-qty-width: 140px;
-  --cart-price-width: 96px;
-  --content-width: 1280px;
-
-  --font-ui: "EverydaySans", "Shubbak", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --cart-price-width: 110px;
+  --qty-bubble: 32px;
+  --order-width: 360px;
 }
 
 * {
@@ -77,336 +79,556 @@
 
 body {
   margin: 0;
-  font-family: var(--font-ui);
+  background: var(--surface);
+  color: var(--ink);
+  font-family: var(--font-sans);
   font-size: 16px;
-  font-weight: 400;
   line-height: 24px;
-  color: var(--color-ink);
-  background: var(--color-canvas);
 }
 
-/* Headings: weight 700, no letter-spacing. */
+/* Text only screen readers hear (for example the search label). */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* Line icons: 1.75px stroke, round ends. */
+.icon {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.75;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
 h1,
 h2,
 h3 {
-  font-family: var(--font-ui);
-  font-weight: 700;
   margin: 0;
+  color: var(--heading);
 }
 h1 {
-  font-size: 24px;
-  line-height: 28px;
+  font-size: 36px;
+  line-height: 44px;
+  font-weight: 700;
 }
 h2 {
-  font-size: 20px;
-  line-height: 24px;
-  margin-bottom: var(--space-base);
-}
-h3 {
-  font-size: 18px;
-  line-height: 24px;
+  font-size: 24px;
+  line-height: 32px;
+  font-weight: 600;
 }
 
 a {
-  color: var(--color-primary);
-  font-weight: 700;
+  color: var(--primary);
 }
 
-/* Header: top-nav (brand-bold navy) over category-nav (pressed navy), both full-bleed. */
+/* The page wrapper: clips the sky-blue shape so the page never scrolls sideways. */
+.app {
+  position: relative;
+  isolation: isolate;
+  overflow: clip;
+  background: var(--surface);
+}
+
+/* ---------- Header ---------- */
 header {
   display: grid;
   grid-template-columns: 1fr auto;
+  grid-template-areas:
+    "logo cart"
+    "nav nav"
+    "search search";
   align-items: center;
-  background: var(--color-brand-bold);
-  color: var(--color-canvas);
+  gap: var(--space-2) var(--space-6);
+  padding: var(--space-4) var(--page-pad);
 }
 .logo {
-  grid-column: 1;
-  grid-row: 1;
-  padding: var(--space-md) var(--space-lg);
-  font-size: 20px;
-  font-weight: 700;
-  color: var(--color-canvas);
-  text-decoration: none;
-  margin: 0;
-}
-.cart {
-  grid-column: 2;
-  grid-row: 1;
-  margin: 0;
-  padding-right: var(--space-lg);
-}
-.cart a {
+  grid-area: logo;
   display: inline-flex;
   align-items: center;
-  gap: var(--space-sm);
-  min-height: var(--control-height);
-  padding: 0 var(--space-base);
-  border-radius: var(--radius-full);
-  color: var(--color-canvas);
-  font-size: 14px;
-  font-weight: 700;
-  text-decoration: none;
+  min-height: var(--touch-target);
 }
-.cart a:hover {
-  background: var(--color-primary-pressed);
-}
-/* The item count is a small spark-yellow badge with navy text, never white. */
-#cart-count {
-  min-width: 24px;
-  padding: var(--space-xs) var(--space-sm);
-  border-radius: var(--radius-md);
-  background: var(--color-spark);
-  color: var(--color-brand-bold);
-  text-align: center;
-  line-height: 16px;
+.logo img {
+  display: block;
+  height: var(--logo-height);
+  width: auto;
 }
 header nav {
-  grid-column: 1 / -1;
-  grid-row: 2;
+  grid-area: nav;
   display: flex;
-  gap: var(--space-sm);
-  padding: var(--space-sm) var(--space-lg);
-  background: var(--color-primary-pressed);
+  gap: var(--space-6);
 }
 header nav a {
   display: inline-flex;
   align-items: center;
-  min-height: var(--control-height);
-  padding: 0 var(--space-base);
-  border-radius: var(--radius-lg);
-  color: var(--color-canvas);
-  font-size: 14px;
-  font-weight: 400;
+  min-height: var(--touch-target);
+  color: var(--ink);
+  font-size: 16px;
+  white-space: nowrap;
   text-decoration: none;
+  transition: color var(--duration) var(--ease);
 }
 header nav a:hover {
-  background: rgba(255, 255, 255, 0.16);
+  color: var(--primary);
+}
+header nav a[aria-current="page"] {
+  color: var(--heading);
+  font-weight: 500;
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 8px;
+}
+.search {
+  grid-area: search;
+  position: relative;
+  width: var(--search-width);
+}
+.search input {
+  width: 100%;
+  padding-right: var(--space-12);
+}
+.search .icon {
+  position: absolute;
+  top: 50%;
+  right: var(--space-4);
+  transform: translateY(-50%);
+  color: var(--ink);
+  pointer-events: none;
+}
+.cart-link {
+  grid-area: cart;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--touch-target);
+  height: var(--touch-target);
+  color: var(--ink);
+  border-radius: var(--radius-full);
+  transition: color var(--duration) var(--ease);
+}
+.cart-link:hover {
+  color: var(--primary);
+}
+/* The cart count: a small purple badge on the bag. */
+#cart-count {
+  position: absolute;
+  top: 2px;
+  right: 0;
+  min-width: 20px;
+  padding: 0 var(--space-1);
+  background: var(--primary-deep);
+  color: var(--surface);
+  border-radius: var(--radius-full);
+  font-size: 12px;
+  line-height: 20px;
+  font-weight: 600;
+  text-align: center;
 }
 
 main {
-  padding: var(--space-lg);
-  max-width: var(--content-width);
-  margin: 0 auto;
+  padding: 0 var(--page-pad) var(--space-12);
 }
 
-/* Hero: a brand-subtle tile, 8px corners. */
-.hero {
-  padding: var(--space-lg);
-  background: var(--color-brand-subtle);
-  border-radius: var(--radius-md);
-}
-.hero p {
-  margin: var(--space-sm) 0 0;
-}
-
-/* Buttons: Walmart Blue primary, 32px corners, 44px tall, weight 700. */
+/* ---------- Controls ---------- */
 button {
-  font: inherit;
-  font-weight: 700;
-  min-height: var(--control-height);
-  padding: 0 var(--space-lg);
-  border: 0;
-  border-radius: var(--radius-lg);
-  background: var(--color-primary);
-  color: var(--color-canvas);
+  font-family: var(--font-sans);
+  font-size: 15px;
+  line-height: 20px;
+  font-weight: 500;
+  min-height: var(--touch-target);
+  padding: 0 var(--space-4);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-md);
+  background: var(--surface);
+  color: var(--ink);
   cursor: pointer;
+  transition:
+    background-color var(--duration) var(--ease),
+    border-color var(--duration) var(--ease),
+    color var(--duration) var(--ease),
+    transform var(--duration) var(--ease),
+    box-shadow var(--duration) var(--ease);
 }
 button:hover {
-  background: var(--color-primary-hover);
+  border-color: var(--primary);
+  background: var(--primary-tint);
 }
-button:active {
-  background: var(--color-primary-pressed);
+button:disabled,
+button:disabled:hover {
+  background: var(--disabled-bg);
+  border-color: var(--disabled-bg);
+  color: var(--disabled-ink);
+  cursor: not-allowed;
+}
+/* Primary buttons: purple with white text. */
+.primary-button,
+#signup-form button,
+.grid-message button {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: var(--surface);
+}
+.primary-button:hover,
+#signup-form button:hover,
+.grid-message button:hover {
+  background: var(--primary-deep);
+  border-color: var(--primary-deep);
 }
 
-/* Inputs: the search field is a full pill, selects use 8px. Focus thickens the border. */
 input,
 select {
-  font: inherit;
+  font-family: var(--font-sans);
   font-size: var(--input-font-size);
-  min-height: var(--input-height);
-  padding: 0 var(--space-lg);
-  border: 1px solid var(--color-ink);
+  line-height: 24px;
+  min-height: var(--touch-target);
+  padding: 0 var(--space-4);
+  border: 1px solid var(--border-strong);
   border-radius: var(--radius-md);
-  background: var(--color-canvas);
-  color: var(--color-ink);
+  background: var(--surface);
+  color: var(--ink);
 }
-input[type="search"] {
-  border-radius: var(--radius-full);
-}
-select {
-  padding: 0 var(--space-base);
-}
-input:focus,
-select:focus {
-  border-color: var(--color-primary);
-  outline: var(--focus-width) solid var(--color-primary);
-  outline-offset: 0;
+input::placeholder {
+  color: var(--ink-muted);
 }
 button:focus-visible,
+input:focus-visible,
+select:focus-visible,
 a:focus-visible {
-  outline: var(--focus-width) solid var(--color-primary);
+  outline: var(--focus-width) solid var(--primary);
   outline-offset: var(--focus-width);
 }
 
-/* Products. */
-#products {
-  margin-top: var(--space-xl);
+/* ---------- Best sellers ---------- */
+.showcase-main {
+  position: relative;
 }
-.controls {
+/* The sky-blue shape behind the title and the slider. */
+.showcase-main::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: calc(-1 * var(--space-4)) calc(-1 * var(--page-pad)) 0;
+  background: var(--hero);
+  border-radius: 0 0 var(--radius-xl) var(--radius-xl);
+}
+.showcase-head {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--space-base);
-  margin-bottom: var(--space-lg);
+  align-items: center;
+  gap: var(--space-4);
+  padding-top: var(--space-6);
 }
-.controls label {
-  width: 100%;
+.round-button,
+.arrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--round-button);
+  height: var(--round-button);
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-full);
+  background: var(--surface);
+  color: var(--heading);
+  box-shadow: var(--shadow-button);
+}
+.round-button:hover,
+.arrow:hover {
+  background: var(--surface);
+  transform: scale(1.06);
+}
+.round-button[aria-expanded="true"] {
+  background: var(--primary);
+  color: var(--surface);
+}
+.arrows {
   display: flex;
+  gap: var(--space-3);
+  margin-left: auto;
+}
+.arrow:disabled,
+.arrow:disabled:hover {
+  background: transparent;
+  color: var(--disabled-ink);
+  box-shadow: none;
+  transform: none;
+}
+.filters {
+  margin-top: var(--space-4);
+}
+.filters label {
+  display: inline-flex;
   flex-direction: column;
-  gap: var(--space-xs);
+  gap: var(--space-1);
   font-size: 14px;
-  font-weight: 700;
-  line-height: 20px;
+  font-weight: 500;
 }
-.controls input,
-.controls select {
-  width: 100%;
+
+/* The slider: cards in a row that scrolls sideways and snaps to each card. */
+.product-track {
+  position: relative;
+  display: flex;
+  gap: var(--space-6);
+  margin: 0 calc(-1 * var(--page-pad));
+  padding: var(--space-6) var(--page-pad) var(--space-12);
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-padding-inline: var(--page-pad);
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+  mask-image: linear-gradient(to right, #000 calc(100% - var(--fade-width)), transparent);
 }
-.grid {
-  display: grid;
-  gap: var(--space-base);
-  grid-template-columns: repeat(auto-fill, minmax(var(--card-min-width), 1fr));
+.product-track::-webkit-scrollbar {
+  display: none;
 }
-/* card-offer: white, 1px subtle border, 8px corners, 16px padding, flat (no shadow). */
+.product-track.is-at-end {
+  mask-image: none;
+}
 .card {
+  flex: 0 0 var(--card-width);
+  scroll-snap-align: start;
   display: flex;
   flex-direction: column;
-  gap: var(--space-sm);
-  padding: var(--space-md);
-  background: var(--color-canvas);
-  border: 1px solid var(--color-surface-subtle);
-  border-radius: var(--radius-md);
+  padding: var(--space-2);
+  background: var(--surface);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  animation: card-in calc(var(--duration) * 1.5) var(--ease) both;
+  animation-delay: calc(var(--i) * var(--stagger));
+  transition:
+    transform var(--duration) var(--ease),
+    box-shadow var(--duration) var(--ease);
 }
-.card img {
+.card:hover {
+  transform: translateY(var(--lift));
+}
+@keyframes card-in {
+  from {
+    opacity: 0;
+    transform: translateX(var(--slide-in));
+  }
+}
+.card-image img {
+  display: block;
   width: 100%;
   height: auto;
   aspect-ratio: var(--card-image-ratio);
   object-fit: contain;
-  border-radius: var(--radius-md);
-  background: var(--color-canvas);
 }
-.card button {
-  width: 100%;
+.card-info {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
   margin-top: auto;
-  padding: 0 var(--space-xs);
-  white-space: nowrap;
+  padding: var(--space-6) var(--space-6) var(--space-6) calc(var(--space-6) + var(--space-1));
+  background: var(--primary-tint);
+  border-radius: var(--radius-card-info);
+  transition:
+    background-color var(--duration) var(--ease),
+    color var(--duration) var(--ease);
 }
-.category {
-  color: var(--color-text-subdued);
-  font-size: 14px;
-  margin: 0;
+.card-info h3 {
+  grid-column: 1 / -1;
+  font-size: 26px;
+  line-height: 32px;
+  font-weight: 600;
+  transition: color var(--duration) var(--ease);
+}
+.card-category {
+  grid-column: 1 / -1;
+  margin: 0 0 var(--space-3);
+  color: var(--ink-muted);
+  font-size: 15px;
+  transition: color var(--duration) var(--ease);
 }
 .price {
-  font-size: 18px;
-  font-weight: 700;
-  line-height: 24px;
   margin: 0;
+  color: var(--ink-soft);
+  font-size: 16px;
+  font-weight: 500;
+  transition: color var(--duration) var(--ease);
 }
-
-/* Cart. */
-#cart {
-  margin-top: var(--space-2xl);
-}
-.cart-list {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-.cart-list li {
-  display: grid;
-  grid-template-columns: auto 1fr;
-  align-items: center;
-  gap: var(--space-md) var(--space-base);
-  padding: var(--space-md) 0;
-  border-bottom: 1px solid var(--color-surface-subtle);
-}
-/* Row parts: name, quantity, price, remove button. */
-.cart-list li > :first-child {
-  grid-column: 1 / -1;
-}
-.cart-list li > :nth-child(3) {
-  justify-self: end;
-}
-.cart-list li > :nth-child(4) {
-  grid-column: 1 / -1;
-  justify-self: start;
-}
-.qty {
+.bag-button {
   display: inline-flex;
   align-items: center;
-  gap: var(--space-md);
-  font-weight: 700;
-}
-.qty button {
-  width: var(--control-height);
+  justify-content: center;
+  width: var(--round-button);
+  height: var(--round-button);
   padding: 0;
+  border: 0;
+  border-radius: var(--radius-full);
+  background: var(--surface);
+  color: var(--heading);
+  box-shadow: var(--shadow-button);
 }
-/* button-secondary: white fill, blue text, 1px blue border. */
-.cart-list button,
-#clear-cart {
-  background: var(--color-canvas);
-  color: var(--color-primary);
-  border: 1px solid var(--color-primary);
+.bag-button:hover {
+  background: var(--surface);
+  transform: scale(1.08);
 }
-.cart-list button:hover,
-#clear-cart:hover {
-  background: var(--color-brand-subtle);
+/* The active card (the first one in view) turns purple. */
+.card.is-active .card-info {
+  background: var(--primary);
 }
-.cart-list button:active,
-#clear-cart:active {
-  background: var(--color-surface-subtle);
+.card.is-active h3,
+.card.is-active .card-category,
+.card.is-active .price {
+  color: var(--surface);
 }
-.cart-total {
-  font-size: 18px;
-  font-weight: 700;
-  margin: var(--space-lg) 0 var(--space-base);
+.card.is-active .bag-button {
+  background: var(--primary-deep);
+  color: var(--surface);
+  box-shadow: none;
+}
+.card.is-active .bag-button:disabled {
+  background: var(--disabled-bg);
+  color: var(--disabled-ink);
+}
+/* A message in place of the cards: loading, empty, error, or no search match. */
+.grid-message {
+  flex: 1 0 100%;
+  margin: 0;
+  padding: var(--space-6);
+  background: var(--surface);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+}
+.grid-message p {
+  margin: 0 0 var(--space-3);
 }
 
-/* Sign up: a brand-subtle card, 8px corners. */
+/* ---------- Category tiles ---------- */
+.categories {
+  margin-top: var(--space-8);
+}
+.categories h2 {
+  margin-bottom: var(--space-4);
+}
+.category-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.category-tile {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  width: 100%;
+  min-height: calc(var(--tile-image) + var(--space-8));
+  padding: var(--space-4) var(--space-6);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  background: var(--surface);
+  text-align: left;
+  transition:
+    background-color var(--duration) var(--ease),
+    border-color var(--duration) var(--ease),
+    margin var(--duration) var(--ease),
+    width var(--duration) var(--ease),
+    box-shadow var(--duration) var(--ease);
+}
+.category-tile:hover {
+  background: var(--surface);
+  border-color: var(--primary);
+}
+.tile-count {
+  max-width: 0;
+  padding: 0;
+  overflow: hidden;
+  opacity: 0;
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  background: var(--primary-deep);
+  color: var(--surface);
+  border-radius: var(--radius-full);
+  font-size: 14px;
+  white-space: nowrap;
+  transition:
+    max-width var(--duration) var(--ease),
+    padding var(--duration) var(--ease),
+    opacity var(--duration) var(--ease);
+}
+.tile-image {
+  flex: 0 0 var(--tile-image);
+  height: var(--tile-image);
+  border-radius: var(--radius-full);
+  background: var(--tile-circle);
+  overflow: hidden;
+}
+.tile-image img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+.tile-name {
+  color: var(--heading);
+  font-size: 22px;
+  line-height: 28px;
+  font-weight: 600;
+  transition: color var(--duration) var(--ease);
+}
+/* The pressed tile turns purple, moves out to the left and shows its count pill. */
+.category-tile[aria-pressed="true"] {
+  width: calc(100% + var(--tile-shift));
+  margin-left: calc(-1 * var(--tile-shift));
+  background: var(--primary);
+  border-color: var(--primary);
+  box-shadow: var(--shadow-card);
+}
+.category-tile[aria-pressed="true"] .tile-name {
+  color: var(--surface);
+}
+.category-tile[aria-pressed="true"] .tile-count {
+  max-width: var(--touch-target);
+  padding: var(--space-4) var(--space-2);
+  opacity: 1;
+}
+
+/* ---------- Sign-up ---------- */
 #register {
-  margin-top: var(--space-2xl);
-  padding: var(--space-lg);
-  background: var(--color-brand-subtle);
-  border-radius: var(--radius-md);
+  margin-top: var(--space-12);
+  padding: var(--space-6) var(--space-4);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+}
+#register h2 {
+  margin-bottom: var(--space-4);
 }
 #signup-form {
   display: flex;
   flex-direction: column;
-  gap: var(--space-base);
+  gap: var(--space-4);
   max-width: 400px;
 }
 #signup-form label {
   display: flex;
   flex-direction: column;
-  gap: var(--space-xs);
+  gap: var(--space-1);
   font-size: 14px;
-  font-weight: 700;
-  line-height: 20px;
+  font-weight: 500;
 }
 #signup-form button {
   align-self: flex-start;
 }
 #signup-status {
-  font-weight: 700;
-  margin: var(--space-base) 0 0;
+  margin: var(--space-4) 0 0;
+  color: var(--heading);
+  font-weight: 600;
 }
 
-/* Footer: brand-bold navy, white text. */
 footer {
-  margin-top: var(--space-3xl);
-  padding: var(--space-xl) var(--space-lg);
-  background: var(--color-brand-bold);
-  color: var(--color-canvas);
+  padding: var(--space-8) var(--page-pad);
+  border-top: 1px solid var(--border);
+  color: var(--ink-muted);
   font-size: 14px;
   line-height: 20px;
 }
@@ -414,44 +636,688 @@ footer p {
   margin: 0;
 }
 
-/* Tablet and up. */
-@media (min-width: 768px) {
-  .controls label {
-    width: auto;
-  }
-  .controls input,
-  .controls select {
-    width: auto;
-  }
-  .cart-list li {
-    grid-template-columns: 1fr var(--cart-qty-width) var(--cart-price-width) auto;
-  }
-  .qty {
-    justify-content: center;
-  }
-  .cart-list li > :first-child,
-  .cart-list li > :nth-child(4) {
-    grid-column: auto;
-    justify-self: auto;
-  }
-  main {
-    padding: var(--space-xl) var(--space-lg);
-  }
-  .grid {
-    grid-template-columns: repeat(3, 1fr);
-  }
-  .card button {
-    width: auto;
-    align-self: flex-start;
-    padding: 0 var(--space-lg);
+/* ---------- Cart page ---------- */
+.cart-page {
+  padding-top: var(--space-6);
+}
+.cart-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-8);
+}
+/* Panels rise in one after another when the page opens (--i is their order). */
+.reveal {
+  animation: rise-in calc(var(--duration) * 1.5) var(--ease) both;
+  animation-delay: calc(var(--i) * var(--stagger) * 2);
+}
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(var(--rise));
   }
 }
-@media (min-width: 1024px) {
-  .grid {
-    grid-template-columns: repeat(4, 1fr);
+.cart-panel {
+  padding: var(--space-6) var(--space-4);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+}
+.cart-panel-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2) var(--space-4);
+  margin-bottom: var(--space-6);
+}
+.cart-panel h1 {
+  font-size: 32px;
+  line-height: 40px;
+  font-weight: 600;
+}
+.cart-items-label {
+  color: var(--ink-muted);
+  font-size: 15px;
+  font-weight: 400;
+}
+/* A quiet button that looks like text: "Clear cart". */
+.text-button {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  border-color: transparent;
+  background: transparent;
+  color: var(--ink-muted);
+}
+.text-button:hover {
+  border-color: transparent;
+  background: var(--primary-tint);
+  color: var(--primary-deep);
+}
+.text-button:disabled,
+.text-button:disabled:hover {
+  background: transparent;
+  border-color: transparent;
+}
+/* The column names above the rows (tablet and up only). */
+.cart-columns {
+  display: none;
+  gap: var(--space-4);
+  padding: 0 var(--space-6) var(--space-2);
+  font-size: 14px;
+  font-weight: 500;
+}
+.cart-columns span:first-child {
+  grid-column: 1 / 3;
+}
+.cart-columns span:nth-child(2) {
+  text-align: center;
+}
+.cart-columns span:nth-child(3) {
+  text-align: right;
+}
+.cart-rows {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+/* One cart row: photo, name, quantity, price, remove. On phones it uses two lines. */
+.cart-row {
+  display: grid;
+  grid-template-columns: var(--cart-image) minmax(0, 1fr) auto;
+  grid-template-areas:
+    "image name remove"
+    "qty qty price";
+  align-items: center;
+  gap: var(--space-2) var(--space-3);
+  padding: var(--space-4);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--surface);
+  overflow: hidden;
+  transition:
+    border-color var(--duration) var(--ease),
+    box-shadow var(--duration) var(--ease);
+}
+.cart-row:hover {
+  border-color: var(--primary-tint);
+  box-shadow: var(--shadow-card);
+}
+.cart-row.is-entering {
+  animation: slide-in-left calc(var(--duration) * 1.5) var(--ease) both;
+  animation-delay: calc(var(--duration) + var(--i) * var(--stagger));
+}
+@keyframes slide-in-left {
+  from {
+    opacity: 0;
+    transform: translateX(calc(-1 * var(--slide-in)));
   }
-  .hero,
-  #register {
-    padding: var(--space-xl);
+}
+.cart-row-image {
+  grid-area: image;
+  width: var(--cart-image);
+  height: var(--cart-image);
+  object-fit: contain;
+  border-radius: var(--radius-md);
+}
+.cart-row-name {
+  grid-area: name;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+.cart-row-title {
+  color: var(--heading);
+  font-weight: 600;
+}
+.cart-row-category {
+  color: var(--ink-muted);
+  font-size: 14px;
+  line-height: 20px;
+}
+.cart-row .qty {
+  grid-area: qty;
+  justify-self: start;
+}
+.qty {
+  display: inline-flex;
+  align-items: center;
+}
+.qty-button,
+.remove-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--touch-target);
+  padding: 0;
+  border-color: transparent;
+  border-radius: var(--radius-full);
+  background: transparent;
+  color: var(--ink);
+}
+.qty-button:hover,
+.remove-button:hover {
+  border-color: transparent;
+  background: var(--primary-tint);
+  color: var(--primary-deep);
+}
+/* The number between - and +: a purple circle that pops when it changes. */
+.qty-value {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: var(--qty-bubble);
+  height: var(--qty-bubble);
+  padding: 0 var(--space-2);
+  border-radius: var(--radius-full);
+  background: var(--primary);
+  color: var(--surface);
+  font-size: 15px;
+  font-weight: 600;
+}
+.is-popping {
+  animation: pop var(--duration) var(--ease);
+}
+@keyframes pop {
+  50% {
+    transform: scale(var(--pop-scale));
+  }
+}
+.cart-row-price {
+  grid-area: price;
+  justify-self: end;
+  color: var(--ink);
+  font-size: 18px;
+  font-weight: 500;
+}
+.remove-button {
+  grid-area: remove;
+  justify-self: end;
+  color: var(--ink-muted);
+}
+/* Loading or error in place of the rows. */
+.cart-message {
+  padding: var(--space-6);
+  border-radius: var(--radius-md);
+  background: var(--primary-tint);
+}
+.cart-message p {
+  margin: 0 0 var(--space-3);
+}
+/* The empty cart: a floating bag and a link back to the shop. */
+.cart-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-12) var(--space-4);
+  text-align: center;
+  color: var(--heading);
+}
+/* `hidden` must win over the display above. */
+.cart-empty[hidden] {
+  display: none;
+}
+.cart-empty.is-entering {
+  animation: rise-in calc(var(--duration) * 1.5) var(--ease) both;
+}
+.cart-empty .icon {
+  color: var(--primary);
+  animation: float calc(var(--duration) * 8) ease-in-out infinite;
+}
+@keyframes float {
+  50% {
+    transform: translateY(calc(-1 * var(--space-2)));
+  }
+}
+.cart-empty p {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 500;
+}
+/* A link that looks like a primary button. */
+.button-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--touch-target);
+  padding: 0 var(--space-6);
+  border-radius: var(--radius-md);
+  background: var(--primary);
+  color: var(--surface);
+  font-weight: 500;
+  text-decoration: none;
+  transition:
+    background-color var(--duration) var(--ease),
+    transform var(--duration) var(--ease);
+}
+.button-link:hover {
+  background: var(--primary-deep);
+  transform: translateY(calc(var(--lift) / 3));
+}
+
+/* Delivery: native radio buttons inside cards. */
+.delivery h2 {
+  margin-bottom: var(--space-4);
+  font-size: 28px;
+  line-height: 36px;
+}
+.delivery fieldset {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+.delivery-options {
+  display: grid;
+  gap: var(--space-4);
+}
+.delivery-option {
+  display: grid;
+  grid-template-columns: auto auto minmax(0, 1fr);
+  grid-template-areas:
+    "radio icon text"
+    "radio icon price";
+  align-items: center;
+  gap: var(--space-4);
+  min-height: calc(var(--touch-target) * 2);
+  padding: var(--space-4);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--surface);
+  cursor: pointer;
+  transition:
+    border-color var(--duration) var(--ease),
+    box-shadow var(--duration) var(--ease),
+    transform var(--duration) var(--ease);
+}
+.delivery-option:hover {
+  border-color: var(--border-strong);
+}
+.delivery-option input {
+  grid-area: radio;
+  width: 22px;
+  height: 22px;
+  min-height: 0;
+  margin: 0;
+  accent-color: var(--primary);
+}
+.delivery-icon {
+  grid-area: icon;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--touch-target);
+  height: var(--touch-target);
+  border-radius: var(--radius-full);
+  background: var(--primary-tint);
+  color: var(--primary-deep);
+  transition:
+    background-color var(--duration) var(--ease),
+    color var(--duration) var(--ease),
+    transform var(--duration) var(--ease);
+}
+.delivery-text {
+  grid-area: text;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+.delivery-name {
+  font-weight: 500;
+}
+.delivery-days {
+  color: var(--ink-muted);
+  font-size: 14px;
+  line-height: 20px;
+}
+.delivery-price {
+  grid-area: price;
+  font-size: 18px;
+  font-weight: 600;
+}
+/* The chosen card: purple edge, its truck turns purple and drives in a little. */
+.delivery-option:has(input:checked) {
+  border-color: var(--primary);
+  box-shadow: var(--shadow-card);
+}
+.delivery-option:has(input:checked) .delivery-icon {
+  background: var(--primary);
+  color: var(--surface);
+  transform: translateX(var(--space-1));
+}
+.delivery-option:has(input:focus-visible) {
+  outline: var(--focus-width) solid var(--primary);
+  outline-offset: var(--focus-width);
+}
+
+/* Order: promo code, summary and checkout. */
+.order h2 {
+  margin-bottom: var(--space-4);
+}
+.promo-form {
+  display: flex;
+  gap: var(--space-2);
+  padding: var(--space-1);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-md);
+  background: var(--surface);
+}
+.promo-form:focus-within {
+  outline: var(--focus-width) solid var(--primary);
+  outline-offset: var(--focus-width);
+}
+.promo-form input {
+  flex: 1;
+  min-width: 0;
+  border: 0;
+}
+.promo-form input:focus-visible {
+  outline: none;
+}
+.promo-form.is-shaking {
+  animation: shake calc(var(--duration) * 1.2) var(--ease);
+}
+@keyframes shake {
+  20%,
+  60% {
+    transform: translateX(calc(-1 * var(--shake)));
+  }
+  40%,
+  80% {
+    transform: translateX(var(--shake));
+  }
+}
+.promo-status {
+  min-height: var(--space-6);
+  margin: var(--space-2) 0 0;
+  font-size: 14px;
+  line-height: 20px;
+}
+.promo-status.is-error {
+  color: var(--heading);
+  font-weight: 500;
+}
+/* The applied code: a lavender chip that pops in. */
+.promo-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding-left: var(--space-3);
+  border-radius: var(--radius-full);
+  background: var(--primary-tint);
+  color: var(--primary-deep);
+  font-weight: 500;
+  animation: pop var(--duration) var(--ease);
+}
+.chip-remove {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--touch-target);
+  padding: 0;
+  border-color: transparent;
+  border-radius: var(--radius-full);
+  background: transparent;
+  color: var(--primary-deep);
+}
+.chip-remove:hover {
+  border-color: transparent;
+  background: var(--surface);
+}
+.summary {
+  margin: var(--space-6) 0 0;
+  padding-top: var(--space-6);
+  border-top: 1px solid var(--border);
+}
+.summary div {
+  display: flex;
+  justify-content: space-between;
+  padding: var(--space-1) 0;
+}
+.summary dt {
+  color: var(--ink-muted);
+  font-size: 15px;
+}
+.summary dd {
+  margin: 0;
+  font-size: 15px;
+  font-variant-numeric: tabular-nums;
+}
+.summary .summary-total {
+  margin-top: var(--space-2);
+}
+.summary-total dt {
+  color: var(--ink);
+  font-size: 16px;
+  font-weight: 500;
+}
+.summary-total dd {
+  color: var(--heading);
+  font-size: 20px;
+  font-weight: 600;
+}
+.checkout-button {
+  width: 100%;
+  min-height: var(--round-button);
+  margin-top: var(--space-6);
+  font-size: 16px;
+}
+.checkout-button:not(:disabled):hover {
+  transform: translateY(calc(var(--lift) / 3));
+  box-shadow: var(--shadow-button);
+}
+.checkout-status {
+  margin: var(--space-3) 0 0;
+  color: var(--heading);
+  font-size: 14px;
+  line-height: 20px;
+}
+
+/* ---------- Header badge and toasts (every page) ---------- */
+#cart-count.is-bumping {
+  animation: pop var(--duration) var(--ease);
+}
+.toasts {
+  position: fixed;
+  z-index: 10;
+  right: var(--page-pad);
+  bottom: var(--page-pad);
+  left: var(--page-pad);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+  pointer-events: none;
+}
+.toast {
+  margin: 0;
+  padding: var(--space-3) var(--space-6);
+  border-radius: var(--radius-full);
+  background: var(--heading);
+  color: var(--surface);
+  box-shadow: var(--shadow-card);
+  pointer-events: auto;
+  animation: rise-in var(--duration) var(--ease) both;
+}
+.toast a {
+  color: var(--surface);
+  font-weight: 600;
+}
+.toast.is-leaving {
+  animation: fade-out var(--duration) var(--ease) forwards;
+}
+@keyframes fade-out {
+  to {
+    opacity: 0;
+    transform: translateY(var(--rise));
+  }
+}
+
+/* Less motion for people who ask their system for it: every animation and transition
+   uses these tokens, so setting them to 0 turns all of them off. */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --duration: 0ms;
+    --stagger: 0ms;
+  }
+  .product-track {
+    scroll-behavior: auto;
+  }
+}
+
+/* ---------- Tablet and up ---------- */
+@media (min-width: 768px) {
+  :root {
+    --page-pad: 24px;
+    --card-width: 300px;
+    --search-width: 220px;
+  }
+  header {
+    display: flex;
+    gap: var(--space-6);
+  }
+  header nav {
+    margin-right: auto;
+  }
+  h1 {
+    font-size: 48px;
+    line-height: 56px;
+  }
+  #register,
+  .cart-panel {
+    padding: var(--space-8);
+  }
+  :root {
+    --cart-image: 80px;
+  }
+  .cart-columns,
+  .cart-row {
+    grid-template-columns:
+      var(--cart-image) minmax(0, 1fr) var(--cart-qty-width) var(--cart-price-width)
+      var(--touch-target);
+    grid-template-areas: "image name qty price remove";
+  }
+  .cart-columns {
+    display: grid;
+  }
+  .cart-columns[hidden] {
+    display: none;
+  }
+  .cart-row .qty {
+    justify-self: center;
+  }
+  .delivery-options {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* ---------- Desktop: the layout from the design image ---------- */
+@media (min-width: 1024px) {
+  :root {
+    --card-width: 328px;
+    --search-width: 336px;
+    --tile-image: 100px;
+    --tile-shift: 40px;
+    --fade-width: 240px;
+    --header-height: 100px;
+    --page-pad: clamp(32px, 4vw, 64px);
+    --nav-gap: 72px;
+  }
+  /* Full width: the content grows with the screen up to --content-max, then stays
+     centered while the backgrounds still reach both edges. */
+  header,
+  main,
+  footer {
+    padding-inline: max(var(--page-pad), (100% - var(--content-max)) / 2);
+  }
+  header {
+    min-height: var(--header-height);
+    padding-block: 0;
+  }
+  header nav {
+    gap: var(--space-8);
+    margin-left: calc(var(--nav-gap) - var(--space-8));
+  }
+  header nav a {
+    font-size: 17px;
+  }
+  .showcase {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 400px;
+    gap: var(--space-12);
+    align-items: start;
+  }
+  /* The shape now starts at the top of the window and has a slanted right edge. */
+  .showcase-main::before {
+    inset: calc(-1 * var(--header-height)) 20% calc(-1 * var(--space-6)) -100vw;
+    border-radius: 0 var(--radius-xl) 120px 0;
+    transform: skewX(-11deg);
+    transform-origin: top left;
+  }
+  .showcase-head {
+    flex-wrap: nowrap;
+    padding-top: var(--space-8);
+  }
+  h1 {
+    font-size: 64px;
+    line-height: 72px;
+  }
+  .round-button {
+    width: 60px;
+    height: 60px;
+    margin-left: auto;
+  }
+  .arrows {
+    margin-left: 120px;
+  }
+  .product-track {
+    margin-right: 0;
+    padding-top: var(--space-8);
+  }
+  .categories {
+    margin-top: 0;
+    padding-top: calc(var(--space-8) + var(--space-4));
+  }
+  .categories h2 {
+    font-size: 28px;
+    line-height: 36px;
+    margin-bottom: var(--space-12);
+  }
+  .category-tile {
+    min-height: 152px;
+  }
+  .tile-name {
+    font-size: 26px;
+    line-height: 30px;
+  }
+  .cart-page {
+    padding-top: var(--space-8);
+  }
+  .delivery-option {
+    grid-template-columns: auto auto minmax(0, 1fr) auto;
+    grid-template-areas: "radio icon text price";
+  }
+  .cart-layout {
+    grid-template-columns: minmax(0, 1fr) var(--order-width);
+    grid-template-areas:
+      "cart order"
+      "delivery order";
+    column-gap: calc(var(--space-12) + var(--space-8));
+    row-gap: var(--space-12);
+    align-items: start;
+  }
+  .cart-panel {
+    grid-area: cart;
+  }
+  .delivery {
+    grid-area: delivery;
+  }
+  .order {
+    grid-area: order;
+    position: sticky;
+    top: var(--space-8);
+    padding-top: var(--space-6);
   }
 }

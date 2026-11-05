@@ -1,44 +1,69 @@
-import { products } from "./products/data";
-import { filterProducts, sortByPrice } from "./products/logic";
-import { countItems, cartLines, cartTotal } from "./cart/logic";
-import { loadCart, addToCart, updateQty, removeFromCart, clearCart } from "./cart/state";
-import { renderCartCount, renderCart, onCartAction, onClearCart } from "./cart/ui";
-import { renderProducts, readControls, onControlsChange, onAddToCart } from "./products/ui";
-import { onSignup, showSignupSuccess } from "./signup/ui";
+// Home page entry: connects the products, cart and sign-up modules for index.html. No logic here.
+import { loadProducts } from "./modules/products/products.api";
+import type { Product } from "./modules/products/products.types";
+import {
+  categorySummaries,
+  filterProducts,
+  findProduct,
+  sortByPrice,
+} from "./modules/products/logic";
+import type { ApiState } from "./shared/api/client";
+import { countItems, cartLines } from "./modules/cart/logic";
+import { loadCart, addToCart } from "./modules/cart/state";
+import { renderCartBadge } from "./shared/ui/header";
+import { showToast } from "./shared/ui/toast";
+import {
+  renderCategories,
+  renderProducts,
+  renderProductsMessage,
+  readControls,
+  onControlsChange,
+  onAddToCart,
+  onRetry,
+} from "./modules/products/ui";
+import { onSignup, showSignupSuccess } from "./modules/signup/ui";
 
-function updateProducts() {
+// The products from the API. It is null until they have loaded.
+let products: Product[] | null = null;
+
+function updateProducts(): void {
+  if (products === null) return;
   const { text, category, direction } = readControls();
   renderProducts(sortByPrice(filterProducts(products, text, category), direction));
 }
 
-function updateCart() {
-  const cart = loadCart();
-  const lines = cartLines(cart, products);
-  const count = countItems(cart);
-  renderCartCount(count);
-  renderCart(lines, cartTotal(lines), count);
+// The cart lives on its own page (cart.html); here only the header badge shows the count.
+function updateCart(): void {
+  renderCartBadge(countItems(cartLines(loadCart(), products ?? [])));
+}
+
+// Handles every state of the products request: loading, error, empty and success.
+function onProductsState(state: ApiState<Product[]>): void {
+  if (state.status === "success") {
+    products = state.data;
+    renderCategories(categorySummaries(products));
+    updateProducts();
+    updateCart();
+    return;
+  }
+  renderProductsMessage(state);
+}
+
+function startLoadingProducts(): void {
+  void loadProducts(onProductsState);
 }
 
 onControlsChange(updateProducts);
 onAddToCart((id) => {
   addToCart(id);
   updateCart();
+  const product = findProduct(products ?? [], id);
+  if (product)
+    showToast(`${product.name} added to cart.`, { href: "/cart.html", label: "View cart" });
 });
+onRetry(startLoadingProducts);
 
-const QTY_STEP = 1;
-
-onCartAction((action, id) => {
-  if (action === "increase") updateQty(id, QTY_STEP);
-  if (action === "decrease") updateQty(id, -QTY_STEP);
-  if (action === "remove") removeFromCart(id);
-  updateCart();
-});
-onClearCart(() => {
-  clearCart();
-  updateCart();
-});
-
-updateProducts();
+startLoadingProducts();
 updateCart();
 
 onSignup(showSignupSuccess);

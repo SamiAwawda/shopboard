@@ -1,5 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" role="img" aria-label="Photo coming soon">
-  <rect width="400" height="300" fill="#e3e4e5" />
-  <rect x="120" y="85" width="160" height="100" rx="8" fill="none" stroke="#767676" stroke-width="8" />
-  <path d="M165 215h70M200 185v30" stroke="#767676" stroke-width="8" stroke-linecap="round" />
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" role="img" aria-label="Photo coming soon">
+  <rect x="130" y="140" width="140" height="110" rx="16" fill="none" stroke="#c9c5ea" stroke-width="8" />
+  <circle cx="170" cy="178" r="12" fill="#c9c5ea" />
+  <path d="M138 236l42-38 30 26 22-18 34 30" fill="none" stroke="#c9c5ea" stroke-width="8" stroke-linejoin="round" />
 </svg>

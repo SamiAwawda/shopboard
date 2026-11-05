@@ -1,6 +1,12 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <rect width="64" height="64" rx="12" fill="#001e60" />
-  <path d="M18 22h28l-4 20H22z" fill="none" stroke="#ffc220" stroke-width="5" stroke-linejoin="round" />
-  <circle cx="26" cy="50" r="3.5" fill="#ffc220" />
-  <circle cx="40" cy="50" r="3.5" fill="#ffc220" />
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="ShopBoard">
+<title>ShopBoard</title>
+<style>
+  /* The board line is ink on light tabs and white on dark tabs (the awning never changes). */
+  .board { stroke: #14161F; }
+  @media (prefers-color-scheme: dark) { .board { stroke: #FFFFFF; } }
+</style>
+<path d="M5 6H23V17a9 9 0 0 1-18 0Z" fill="#2D5BFF"/>
+<path d="M23 6H41V17a9 9 0 0 1-18 0Z" fill="#FF7A2F"/>
+<path d="M41 6H59V17a9 9 0 0 1-18 0Z" fill="#2D5BFF"/>
+<rect class="board" x="11.5" y="33.5" width="41" height="23" rx="5" fill="none" stroke-width="5"/>
 </svg>

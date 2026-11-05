@@ -1,5 +1,5 @@
 // Signup UI: the only signup file that touches the DOM.
-import { getElement } from "../shared/dom";
+import { getElement } from "../../shared/dom";
 
 const form = getElement<HTMLFormElement>("#signup-form");
 const status = getElement<HTMLElement>("#signup-status");

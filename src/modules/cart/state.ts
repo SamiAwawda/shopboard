@@ -2,11 +2,17 @@
 import type { Cart } from "./cart.types";
 import { addItem, changeQty, isCart, removeItem } from "./logic";
 
-const CART_KEY = "cart";
+// The localStorage key starts with the project name, so another project on the same address can't use it.
+const CART_KEY = "shopboard-cart";
 
+// Reads the saved cart. Text that is not valid JSON, or is not a cart, gives an empty cart.
 export function loadCart(): Cart {
-  const saved: unknown = JSON.parse(localStorage.getItem(CART_KEY) ?? "[]");
-  return isCart(saved) ? saved : [];
+  try {
+    const saved: unknown = JSON.parse(localStorage.getItem(CART_KEY) ?? "[]");
+    return isCart(saved) ? saved : [];
+  } catch {
+    return [];
+  }
 }
 
 function saveCart(cart: Cart): void {

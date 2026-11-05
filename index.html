@@ -5,91 +5,127 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>ShopBoard</title>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="./style.css" />
   </head>
   <body>
-    <header>
-      <a class="logo" href="/">ShopBoard</a>
-      <nav aria-label="Main">
-        <a href="#products">Shop</a>
-        <a href="#register">Sign up</a>
-      </nav>
-      <p class="cart">
-        <a href="#cart">Cart: <span id="cart-count">0</span></a>
-      </p>
-    </header>
-    <main>
-      <section class="hero">
-        <h1>Sell smarter.</h1>
-        <p>Everything your shop needs, in one board.</p>
-      </section>
-      <section id="products" aria-labelledby="products-title">
-        <h2 id="products-title">Products</h2>
-        <div class="controls">
-          <label for="search">
-            Search
-            <input type="search" id="search" placeholder="Search by name" />
-          </label>
-          <label for="category">
-            Category
-            <select id="category">
-              <option value="All">All</option>
-              <option value="Laptops">Laptops</option>
-              <option value="Graphics Cards">Graphics Cards</option>
-              <option value="Monitors">Monitors</option>
-              <option value="Keyboards &amp; Mice">Keyboards &amp; Mice</option>
-              <option value="Storage">Storage</option>
-            </select>
-          </label>
-          <label for="sort">
-            Sort by
-            <select id="sort">
-              <option value="default">Default</option>
-              <option value="asc">Price: low to high</option>
-              <option value="desc">Price: high to low</option>
-            </select>
-          </label>
+    <div class="app">
+      <header>
+        <a class="logo" href="/"
+          ><img src="/images/logo/shopboard-lockup.svg" alt="ShopBoard" width="150" height="32"
+        /></a>
+        <nav aria-label="Main">
+          <a href="/" aria-current="page">Products</a>
+          <a href="/cart.html">Cart</a>
+          <a href="#register">Sign up</a>
+        </nav>
+        <div class="search" role="search">
+          <label for="search" class="visually-hidden">Search products</label>
+          <input type="search" id="search" placeholder="Search" />
+          <svg class="icon" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
+            <circle cx="11" cy="11" r="7" />
+            <path d="m20 20-3.5-3.5" />
+          </svg>
         </div>
-        <div class="grid"></div>
-      </section>
-      <section id="cart" aria-labelledby="cart-title">
-        <h2 id="cart-title">Your cart</h2>
-        <ul id="cart-items" class="cart-list"></ul>
-        <p class="cart-total">
-          Items: <span id="cart-items-count">0</span> · Total: <strong id="cart-total">$0</strong>
-        </p>
-        <button type="button" id="clear-cart">Clear cart</button>
-      </section>
-      <section id="register" aria-labelledby="register-title">
-        <h2 id="register-title">Sign up</h2>
-        <form id="signup-form">
-          <label for="signup-name">
-            Name
-            <input type="text" id="signup-name" name="name" autocomplete="name" required />
-          </label>
-          <label for="signup-email">
-            Email
-            <input type="email" id="signup-email" name="email" autocomplete="email" required />
-          </label>
-          <label for="signup-password">
-            Password (at least 8 characters)
-            <input
-              type="password"
-              id="signup-password"
-              name="password"
-              autocomplete="new-password"
-              minlength="8"
-              required
-            />
-          </label>
-          <button type="submit">Create account</button>
-        </form>
-        <p id="signup-status" role="status"></p>
-      </section>
-    </main>
-    <footer>
-      <p>© 2026 ShopBoard</p>
-    </footer>
+        <a class="cart-link" href="/cart.html">
+          <svg class="icon" viewBox="0 0 24 24" width="26" height="26" aria-hidden="true">
+            <path d="M5.5 8h13l-1.2 11.2a2 2 0 0 1-2 1.8H8.7a2 2 0 0 1-2-1.8L5.5 8Z" />
+            <path d="M9 8a3 3 0 0 1 6 0" />
+            <path d="M9.5 13.5a2.5 2.5 0 0 0 5 0" />
+          </svg>
+          <span class="visually-hidden">Cart:</span>
+          <span id="cart-count">0</span>
+        </a>
+      </header>
+      <main>
+        <section id="products" class="showcase" aria-labelledby="products-title">
+          <div class="showcase-main">
+            <div class="showcase-head">
+              <h1 id="products-title">Best Sellers</h1>
+              <button
+                type="button"
+                class="round-button"
+                id="filter-toggle"
+                aria-label="Sort options"
+                aria-expanded="false"
+                aria-controls="filters"
+              >
+                <svg class="icon" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
+                  <path d="M4 7h16M7 12h10M10 17h4" />
+                </svg>
+              </button>
+              <div class="arrows">
+                <button
+                  type="button"
+                  class="arrow"
+                  id="carousel-prev"
+                  aria-label="Previous products"
+                >
+                  <svg class="icon" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
+                    <path d="M19 12H5m6-6-6 6 6 6" />
+                  </svg>
+                </button>
+                <button type="button" class="arrow" id="carousel-next" aria-label="Next products">
+                  <svg class="icon" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
+                    <path d="M5 12h14m-6-6 6 6-6 6" />
+                  </svg>
+                </button>
+              </div>
+            </div>
+            <div class="filters" id="filters" hidden>
+              <label for="sort">
+                Sort by
+                <select id="sort">
+                  <option value="default">Default</option>
+                  <option value="asc">Price: low to high</option>
+                  <option value="desc">Price: high to low</option>
+                </select>
+              </label>
+            </div>
+            <div class="product-track"></div>
+          </div>
+          <aside class="categories" aria-labelledby="categories-title">
+            <h2 id="categories-title">Categories</h2>
+            <ul class="category-list"></ul>
+          </aside>
+        </section>
+        <section id="register" aria-labelledby="register-title">
+          <h2 id="register-title">Sign up</h2>
+          <form id="signup-form">
+            <label for="signup-name">
+              Name
+              <input type="text" id="signup-name" name="name" autocomplete="name" required />
+            </label>
+            <label for="signup-email">
+              Email
+              <input type="email" id="signup-email" name="email" autocomplete="email" required />
+            </label>
+            <label for="signup-password">
+              Password (at least 8 characters)
+              <input
+                type="password"
+                id="signup-password"
+                name="password"
+                autocomplete="new-password"
+                minlength="8"
+                required
+              />
+            </label>
+            <button type="submit">Create account</button>
+          </form>
+          <p id="signup-status" role="status"></p>
+        </section>
+      </main>
+      <footer>
+        <p>© 2026 ShopBoard</p>
+      </footer>
+    </div>
     <script type="module" src="./src/main.ts"></script>
   </body>
 </html>

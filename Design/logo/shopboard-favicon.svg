@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="ShopBoard">
+<title>ShopBoard</title>
+<path d="M5 6H23V17a9 9 0 0 1-18 0Z" fill="#2D5BFF"/>
+<path d="M23 6H41V17a9 9 0 0 1-18 0Z" fill="#FF7A2F"/>
+<path d="M41 6H59V17a9 9 0 0 1-18 0Z" fill="#2D5BFF"/>
+<rect x="11.5" y="33.5" width="41" height="23" rx="5" fill="none" stroke="#14161F" stroke-width="5"/>
+</svg>
