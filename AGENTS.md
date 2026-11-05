@@ -38,6 +38,16 @@ Mobile details matter: inputs are at least 16px, tap targets are at least 44px, 
 9. Don't change what I didn't ask for.
 10. Everything in `src/` is `.ts`. Write the types yourself (`Product`, `CartItem`, `Cart`). No `any`, no `as`, no `!`: ESLint fails on all three. Give every function parameter and return value a type.
 
+## Rules from mistakes the AI made
+
+These come from real mistakes in this project. Before you finish a task, check that you didn't repeat them.
+
+1. **Only `.ts` files go in `src/`.** Fonts, images and logos go in `public/`. The AI once put the font files in `src/fonts/`, and I had to move them.
+2. **Don't use `as` to make a type error go away.** Check the value with a type guard instead. The AI wrote `JSON.parse(...) as Cart`, which trusts whatever is saved in the browser.
+3. **Don't run a command with `--version` or `--help` unless you know what it does.** The AI ran `npx husky --version`. Husky took `--version` as a folder name and broke `git commit` until I fixed it.
+4. **Write a value that can change in one place only.** The AI wrote the API address in two files. I asked for one, and now it is only in `shared/api/client.ts`.
+5. **Inputs are 16px, and check it on the real element.** `font: inherit` took 14px from the label around the input, and phones zoom in on fields smaller than 16px.
+
 ## Project structure
 
 - `index.html`: the home page (entry: `src/main.ts`)
