@@ -1,8 +1,17 @@
 ## Bug 1
 
-- **What I saw:** Claude added files inside `src/` that don't belong there. It copied the five Shubbak font files (`.ttf`) into `src/fonts/`, so `src/` had files that are not `.ts`. The assignment says every file in `src/` must be `.ts`.
-- **Type:** project structure / convention (not runtime, logic or state: the page worked fine)
-- **How I found it:** I checked the code against the assignment rule "Every file in `src/` is `.ts`" with `find src -type f ! -name '*.ts'`. It listed the 5 `.ttf` files.
-- **Cause:** `src/fonts/*.ttf` (5 files), and `style.css` lines 4, 10, 16, 22 and 28 pointed to them with `url("./src/fonts/...")`. Claude put the fonts in `src/` so Vite would bundle them from the CSS. It worked in the browser, but it broke the rule about what `src/` may contain. Nobody checked the new files against the project rules before committing them.
-- **Fix:** Moved the fonts to `public/fonts/` with `git mv` and changed the five `url()` paths in `style.css` to `/fonts/...`. Added ESLint rules so `any`, `as` and `!` fail lint too. Then checked that `src/` has 0 non-`.ts` files, that the fonts still load in the browser, and that the build passes. Fixed in commit `9e588a4`.
-- **Did I use AI? For what?** Yes. Claude Code added the font files to `src/` (the bug), and then found it and fixed it when I asked it to check the "everything in TypeScript" rule. I decided what the rule means and I reviewed the result.
+- **What I saw:** The AI put 5 font files (`.ttf`) in `src/fonts/`, but `src/` must only have `.ts` files.
+- **Type:** project structure (the page worked fine)
+- **How I found it:** I checked the rule "every file in `src/` is `.ts`" with `find src -type f ! -name '*.ts'`.
+- **Cause:** `src/fonts/*.ttf` and the `url("./src/fonts/...")` lines in `style.css`. The AI put the fonts there so Vite would bundle them.
+- **Fix:** Moved the fonts to `public/fonts/` and changed the `url()` paths. Commit `9e588a4`.
+- **Did I use AI? For what?** Yes. The AI made the mistake, then found and fixed it when I asked it to check the rule.
+
+## Bug 2
+
+- **What I saw:** Setting `cart` to `{bad` in Application > Local Storage and reloading showed a red `SyntaxError` in the Console, and the cart stopped working.
+- **Type:** state / runtime
+- **How I found it:** The review notes pointed at `loadCart`. I reproduced it with the Application tab and the Console.
+- **Cause:** `src/modules/cart/state.ts` line 8: `JSON.parse` had no `try/catch`, so invalid JSON threw an error nobody caught. The key `"cart"` (line 5) was also too general. (`{"a":1}` was already handled by `isCart`.)
+- **Fix:** Wrapped the read in `try/catch` and return `[]` on any error. Changed the keys to `shopboard-cart`, `shopboard-delivery` and `shopboard-promo`. Checked `{bad`, `{"a":1}` and an empty string: all give an empty cart with no error.
+- **Did I use AI? For what?** Yes. I asked the AI to fix it after reading the review notes. It wrote the fix and tested it in a browser.
